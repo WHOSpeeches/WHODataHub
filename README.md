@@ -14,11 +14,15 @@ Below is a brief summary of each of the scripts.
 In order to fully regenerate the results, delete the cached folder and run the scripts in the order listed.
 The pathing can be changed to any desired location.
 
-1. [get_all_speeches.py](./get_all_speeches.py).
+1. Open a PowerShell window and change to the `~/code` folder.
+   ```{ps1}
+   cd "D:\repos\WHOSpeechAnalysis\data\code"
+   ```
+2. [get_the_list_of_all_speeches.py](./get_the_list_of_all_speeches.py).
    This script will get the list of all of the director general's speeches from [here](https://www.who.int/director-general/speeches).
    The script can be run more than once.
    In this case the only new speeches will be retrieved.
    In the case of a network interruption causing a failed run, delete the full run and try again.
-   ```{shell}
+   ```{ps1}
    python get_the_list_of_all_speeches.py -out d:/datasets/who
    ```
