@@ -1,0 +1,7 @@
+# IDE/tools
+__pycache__
+.vscode
+*.bak
+
+# config
+config.yml
