@@ -12,7 +12,7 @@ from typeguard import typechecked
 _run_id = datetime.utcnow().strftime('%Y%m%d%H%M%S')
 
 @typechecked
-def get_the_list_of_all_speeches(folder_out: pathlib.Path) -> None:
+def get_speeches_list(folder_out: pathlib.Path) -> None:
     """
     Get the list of all of the WHO director general's speeches.
     When running the 2nd time, check your local copy to determine how far back you need to pull.
@@ -164,4 +164,4 @@ if __name__ == '__main__':
         default = 'd:/datasets/who')
     args = parser.parse_args()
     print(f'folder out: {args.folder_out}')
-    get_the_list_of_all_speeches(args.folder_out)
+    get_speeches_list(args.folder_out)
