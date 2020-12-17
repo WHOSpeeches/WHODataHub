@@ -18,11 +18,18 @@ The pathing can be changed to any desired location.
    ```{ps1}
    cd "D:\repos\WHOSpeechAnalysis\data\code"
    ```
-2. [get_the_list_of_all_speeches.py](./get_the_list_of_all_speeches.py).
+2. [get_speeches_list](./code/get_speeches_list.py).
    This script will get the list of all of the director general's speeches from [here](https://www.who.int/director-general/speeches).
    The script can be run more than once.
    In this case the only new speeches will be retrieved.
    In the case of a network interruption causing a failed run, delete the full run and try again.
    ```{ps1}
-   python get_the_list_of_all_speeches.py -out d:/datasets/who
+   python get_speeches_list.py -out d:/datasets/who
+   ```
+3. [convert_speeches_list](./code/convert_speeches_list.py).
+   This script will convert the raw HTML list of the director general's speeches to JSONL.
+   The script can be run more than once.
+   In this case the file is completly regenerated.
+   ```{ps1}
+   python convert_speeches_list.py -out d:/datasets/who
    ```
