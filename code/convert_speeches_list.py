@@ -10,7 +10,7 @@ from typeguard import typechecked
 @typechecked
 def convert_speeches_list(folder_in: pathlib.Path, file_out: pathlib.Path) -> None:
     """
-    Converts the list of all of the WHO director general's speeches from a collection of HTML files into a single JSONL file
+    Converts the list of all of the WHO director general's speeches from a collection of HTML files into a single txt file
 
     Parameters
     ----------
