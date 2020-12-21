@@ -25,8 +25,9 @@ def convert_speeches_list(folder_in: pathlib.Path, file_out: pathlib.Path) -> No
     if file_out.exists():
         file_out.unlink()
 
-    files = [file for file in folder_in.iterdir()]
-    links = [_extract_links(file) for file in files]
+    files = [f for f in folder_in.iterdir()]
+    files = [f for f in files if f.suffix == '.html' and f.stem.startswith('header.')]
+    links = [_extract_links(f) for f in files]
     links = [x for y in links for x in y]
     links = [link for link in sorted(list(set(links)))]
 
