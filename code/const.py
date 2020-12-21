@@ -1,4 +1,5 @@
 USER_AGENT = 'WHOSpeechAnalysis/1.0'
-URL_ROBOTS = 'http://who.int/robots.txt'
-URL_SPEECHES = 'https://www.who.int/director-general/speeches/{page}'
+URL_TLD = 'http://who.int'
+URL_ROBOTS = f'{URL_TLD}/robots.txt'
+URL_SPEECHES = f'{URL_TLD}/director-general/speeches/{{page}}'
 WEB_DELAY = 2

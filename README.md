@@ -24,12 +24,12 @@ The pathing can be changed to any desired location.
    In this case the only new speeches will be retrieved.
    In the case of a network interruption causing a failed run, delete the full run and try again.
    ```{ps1}
-   python get_speeches_list.py -out d:/datasets/who
+   python get_speeches_list.py -out d:/datasets/who/raw
    ```
 3. [convert_speeches_list](./code/convert_speeches_list.py).
-   This script will convert the raw HTML list of the director general's speeches to JSONL.
+   This script will convert the raw HTML list of links to the director general's speeches to text.
    The script can be run more than once.
    In this case the file is completly regenerated.
    ```{ps1}
-   python convert_speeches_list.py -out d:/datasets/who
+   python convert_speeches_list.py -in d:/datasets/who/raw -out d:/datasets/who/speeches.txt
    ```

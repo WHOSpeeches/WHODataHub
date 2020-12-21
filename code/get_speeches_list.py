@@ -23,7 +23,6 @@ def get_speeches_list(folder_out: pathlib.Path) -> None:
         Folder to contain the downloaded documents
     """
 
-    folder_out = folder_out.joinpath('./raw')
     folder_out.mkdir(parents = True, exist_ok = True)
 
     with requests.Session() as session:
@@ -161,7 +160,7 @@ if __name__ == '__main__':
         '-out', '--folder-out',
         help = 'Folder to contain the downloaded documents',
         type = pathlib.Path,
-        default = 'd:/datasets/who')
+        required = True)
     args = parser.parse_args()
     print(f'folder out: {args.folder_out}')
     get_speeches_list(args.folder_out)
