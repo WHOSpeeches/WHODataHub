@@ -4,9 +4,9 @@ Below can be found a list of data retrieval scripts that help make this work pos
 # Python
 
 All scripts have been tested on Python 3.8.6.
-The external modules that were used can be found in the `requirments.txt` file along with their versions.
+The external modules that were used can be found in the `requirements.txt` file along with their versions.
 **Note**: not all modules are required for all scripts.
-If any of the modules are not already installed the normal `pip install -r requirments.txt` process should be followed.
+If any of the modules are not already installed the normal `pip install -r requirements.txt` process should be followed.
 
 ## Scripts
 
@@ -39,4 +39,11 @@ The pathing can be changed to any desired location.
    In this case the only new speeches that were not previously downloaded will be retrieved.
    ```{ps1}
    python get_speeches_text.py -in d:/datasets/who/speeches.txt -out d:/datasets/who/raw 
+   ```
+5. [convert_speeches_text](./code/convert_speeches_text.py).
+   This script will convert the raw HTML speech of the director general's speeches to text.
+   The script can be run more than once.
+   In this case the file is completly regenerated.
+   ```{ps1}
+   python convert_speeches_text.py -in d:/datasets/who/raw -out d:/datasets/who/corpus.jsonl
    ```
