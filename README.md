@@ -33,3 +33,10 @@ The pathing can be changed to any desired location.
    ```{ps1}
    python convert_speeches_list.py -in d:/datasets/who/raw -out d:/datasets/who/speeches.txt
    ```
+4. [get_speeches_text](./code/get_speeches_text.py).
+   This script will get the HTML of all of the director general's speeches
+   The script can be run more than once.
+   In this case the only new speeches that were not previously downloaded will be retrieved.
+   ```{ps1}
+   python get_speeches_text.py -in d:/datasets/who/speeches.txt -out d:/datasets/who/raw 
+   ```
