@@ -6,7 +6,13 @@ Below can be found a list of data retrieval scripts that help make this work pos
 All scripts have been tested on Python 3.8.6.
 The external modules that were used can be found in the `requirements.txt` file along with their versions.
 **Note**: not all modules are required for all scripts.
-If any of the modules are not already installed the normal `pip install -r requirements.txt` process should be followed.
+If any of the modules are not already installed, the normal `pip install -r requirements.txt` from an _ADMIN_ shell process should be followed.
+_After_ installing the `requirements.txt`, please follow the below steps:
+
+1. Download NLTK package extensions.
+   ```{ps1}
+   python -c "import nltk;nltk.download('punkt')"
+   ```
 
 ## Scripts
 
@@ -46,4 +52,12 @@ The pathing can be changed to any desired location.
    In this case the file is completly regenerated.
    ```{ps1}
    python convert_speeches_text.py -in d:/datasets/who/raw -out d:/datasets/who/corpus.jsonl
+   ```
+6. [tokenize_speeches_text](./code/tokenize_speeches_text.py).
+   This script will tokenize the raw speech text, converting one paragraph per line to one sentence per line.
+   Addtional cleanup (i.e. ` to ') will also be performed.
+   The script can be run more than once.
+   In this case the file is completly regenerated.
+   ```{ps1}
+   python tokenize_speeches_text.py -in d:/datasets/who/corpus.jsonl -out d:/datasets/who/corpus.tokenized.jsonl
    ```
