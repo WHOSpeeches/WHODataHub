@@ -57,22 +57,30 @@ def _process_document(file_in: pathlib.Path) -> dict:
     date = tree.find("//div[@class='row']//div[@class='date']/span").text.strip()
     date = datetime.strptime(date, '%d %B %Y').strftime('%Y-%m-%d')
     paragraphs = tree.findall("//article/div/p")
-    paragraphs = [paragraph for paragraph in _get_paragraphs(paragraphs)]
+    paragraphs = [paragraph for paragraph in _get_innertext(paragraphs)]
 
     json = { 'id' : id, 'title' : title, 'date': date, 'text' : paragraphs }
     return json
 
 @typechecked
-def _get_paragraphs(nodes: t.List[etree.Element]) -> t.Iterator[str]:
+def _get_innertext(nodes: t.List[etree.Element]) -> t.Iterator[str]:
     for node in nodes:
         subnodes = node.getchildren()
+        result = []
         if node.text is not None:
             text = node.text.strip()
             if len(text) > 0:
-                yield text
+                result.append(text)
         if len(subnodes) > 0:            
-            for text in _get_paragraphs(subnodes):
-                yield text
+            for text in _get_innertext(subnodes):
+                result.append(text)
+        if node.tail is not None:
+            text = node.tail.strip()
+            if len(text) > 0:
+                result.append(text)
+        result = ' '.join(result).strip()
+        if len(result) > 0:
+            yield result
 
 if __name__ == '__main__':
     parser = ArgumentParser()
