@@ -25,16 +25,20 @@ def convert_speeches_list(folder_in: pathlib.Path, file_out: pathlib.Path) -> No
     if file_out.exists():
         file_out.unlink()
 
-    files = [f for f in folder_in.iterdir()]
-    files = [f for f in files if f.suffix == '.html' and f.stem.startswith('header.')]
-    links = [_extract_links(f) for f in files]
-    links = [x for y in links for x in y]
-    links = [link for link in sorted(list(set(links)))]
+
+    links = []
+    speech = 1
+    widgets = [ 'Converting Speech # ', pb.Counter(), ' ', pb.BouncingBar(marker = '.', left = '[', right = ']'), ' ', pb.Timer()]  
+    with pb.ProgressBar(widgets = widgets) as bar:
+        for file in folder_in.iterdir():
+            if file.stem.startswith('header.') and file.suffix == '.html':
+                bar.update(speech)
+                speech = speech + 1
+                links.extend(_extract_links(file))
 
     with open(file_out, 'w', encoding = 'utf-8') as fp:
-        for link in links:
+        for link in sorted(list(set(links))):
             fp.writelines([link, '\n'])
-
 
 @typechecked
 def _extract_links(file_in: pathlib.Path) -> t.List[str]:

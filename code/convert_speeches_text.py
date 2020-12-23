@@ -33,7 +33,7 @@ def convert_speeches_text(folder_in: pathlib.Path, file_out: pathlib.Path) -> No
         with open(file_out, 'w', encoding = 'utf-8') as fp:
             with jl.Writer(fp, compact = True, sort_keys = True) as writer:
                 for file in folder_in.iterdir():
-                    if file.suffix == '.html' and file.stem.startswith('detail.'):
+                    if file.stem.startswith('detail.') and file.suffix == '.html':
                         bar.update(speech)
                         speech = speech + 1
                         json = _process_document(file)
@@ -71,7 +71,7 @@ def _get_innertext(nodes: t.List[etree.Element]) -> t.Iterator[str]:
             text = node.text.strip()
             if len(text) > 0:
                 result.append(text)
-        if len(subnodes) > 0:            
+        if len(subnodes) > 0:
             for text in _get_innertext(subnodes):
                 result.append(text)
         if node.tail is not None:
