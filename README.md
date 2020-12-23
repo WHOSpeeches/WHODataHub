@@ -35,7 +35,7 @@ The pathing can be changed to any desired location.
 3. [convert_speeches_list](./code/convert_speeches_list.py).
    This script will convert the raw HTML list of links to the director general's speeches to text.
    The script can be run more than once.
-   In this case the file is completly regenerated.
+   In this case the file is completely regenerated.
    ```{ps1}
    python convert_speeches_list.py -in d:/datasets/who/raw -out d:/datasets/who/speeches.txt
    ```
@@ -49,15 +49,15 @@ The pathing can be changed to any desired location.
 5. [convert_speeches_text](./code/convert_speeches_text.py).
    This script will convert the raw HTML speech of the director general's speeches to text.
    The script can be run more than once.
-   In this case the file is completly regenerated.
+   In this case the file is completely regenerated.
    ```{ps1}
    python convert_speeches_text.py -in d:/datasets/who/raw -out d:/datasets/who/corpus.jsonl
    ```
 6. [tokenize_speeches_text](./code/tokenize_speeches_text.py).
    This script will tokenize the raw speech text, converting one paragraph per line to one sentence per line.
-   Addtional cleanup (i.e. ` to ') will also be performed.
+   Additional cleanup (i.e. ` to ') will also be performed.
    The script can be run more than once.
-   In this case the file is completly regenerated.
+   In this case the file is completely regenerated.
    ```{ps1}
    python tokenize_speeches_text.py -in d:/datasets/who/corpus.jsonl -out d:/datasets/who/corpus.tokenized.jsonl
    ```
