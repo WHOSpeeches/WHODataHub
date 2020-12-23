@@ -39,6 +39,8 @@ def convert_speeches_text(folder_in: pathlib.Path, file_out: pathlib.Path) -> No
                         json = _process_document(file)
                         if len(json['text']) > 0:
                             writer.write(json)
+                        else:
+                            print(f'Speech is missing text: {file.name}')
 
 @typechecked
 def _process_document(file_in: pathlib.Path) -> dict:
@@ -52,15 +54,27 @@ def _process_document(file_in: pathlib.Path) -> dict:
     """
     with open(file_in, 'r', encoding = 'utf-8') as fp:
         tree = etree.parse(fp, etree.HTMLParser())
+
     id = file_in.name
     title = tree.find("//head/title").text.strip()
     date = tree.find("//div[@class='row']//div[@class='date']/span").text.strip()
     date = datetime.strptime(date, '%d %B %Y').strftime('%Y-%m-%d')
-    paragraphs = tree.findall("//article/div/p")
-    paragraphs = [paragraph for paragraph in _get_innertext(paragraphs)]
+    paragraphs = _get_paragraphs(tree)
 
     json = { 'id' : id, 'title' : title, 'date': date, 'text' : paragraphs }
     return json
+
+def _get_paragraphs(tree: etree) -> t.Iterator[str]:
+    """
+    Gets the paragraphs from the speech
+    There are several formats we need to try in order of decreasing occurrence
+    """
+    xpaths = ["//article/div/p", "//article/div/div", "//article/div/br"]
+    for xpath in xpaths:
+        paragraphs = tree.findall(xpath)
+        paragraphs = [paragraph for paragraph in _get_innertext(paragraphs)]
+        if len(paragraphs) > 0:
+            return paragraphs
 
 @typechecked
 def _get_innertext(nodes: t.List[etree.Element]) -> t.Iterator[str]:
