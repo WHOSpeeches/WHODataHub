@@ -38,7 +38,7 @@ The pathing can be changed to any desired location.
    The script can be run more than once.
    In this case the only new speeches that were not previously downloaded will be retrieved.
    ```{ps1}
-   python get_speeches_text.py -in d:/datasets/who/speeches.txt -out d:/datasets/who/raw 
+   python get_speeches_text.py -in d:/datasets/who/speeches.txt -out d:/datasets/who/raw
    ```
 5. [convert_speeches_text](./code/convert_speeches_text.py).
    This script will convert the raw HTML speech of the director general's speeches to text.
