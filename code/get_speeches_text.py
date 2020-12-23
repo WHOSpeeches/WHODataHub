@@ -1,4 +1,5 @@
 import const
+import hashlib
 import pathlib
 import time
 import requests
@@ -27,6 +28,7 @@ def get_speeches_text(file_in: pathlib.Path, folder_out: pathlib.Path) -> None:
         raise RuntimeError(f'Could not find the list of speeches to download: {file_in}')
     folder_out.mkdir(parents = True, exist_ok = True)
 
+    collisions = {}
     with requests.Session() as session:
         session.headers['User-Agent'] = const.USER_AGENT
         rtxt = _setup_robots_txt(session)
@@ -39,9 +41,14 @@ def get_speeches_text(file_in: pathlib.Path, folder_out: pathlib.Path) -> None:
                     if rtxt.can_fetch(const.USER_AGENT, url):
                         bar.update(speech)
                         speech = speech + 1
-                        if _needs_download(folder_out, url):
-                            _download_speech(session, folder_out, url)
-                            _take_a_nap(rtxt)
+                        speech_path = _url_to_filepath(folder_out, url)
+                        if speech_path in collisions.keys():
+                            print(f'url hash collision: [{url}] vs [{collisions[speech_path]}]')
+                        else:
+                            collisions[speech_path] = url
+                            if not speech_path.exists():
+                                _download_speech(session, speech_path, url)
+                                _take_a_nap(rtxt)
                     else:
                         print(f'robots.txt forbids url: {url}')
 
@@ -60,33 +67,13 @@ def _setup_robots_txt(session: requests.Session) -> protego.Protego:
     return rtxt
 
 @typechecked
-def _needs_download(folder_out: pathlib.Path, url: str) -> bool:
-    """
-    Get a single speech.
-
-    Parameters
-    ----------
-    folder_out : pathlib.Path
-        Folder to contain the downloaded documents
-    url : str
-        The URL to download
-    """
-
-    result_path = _url_to_filepath(folder_out, url)
-    result = not result_path.exists()
-    return result
-
-@typechecked
 def _url_to_filepath(folder_out: pathlib.Path, url: str) -> pathlib.Path:
-    h = 0
-    url = url.upper()
-    for c in url:
-        h = (h + ord(c)) % 1073741843
-    result_path = folder_out.joinpath( f'./detail.{h:010d}.html')
+    md5 = hashlib.md5(url.encode())
+    result_path = folder_out.joinpath( f'./detail.{md5.hexdigest()}.html')
     return result_path
 
 @typechecked
-def _download_speech(session: requests.Session, folder_out: pathlib.Path, url: str) -> None:
+def _download_speech(session: requests.Session, speech_path: pathlib.Path, url: str) -> None:
     """
     Get a single speech.
 
@@ -94,16 +81,15 @@ def _download_speech(session: requests.Session, folder_out: pathlib.Path, url: s
     ----------
     session: requests.Session
         The browser session
-    folder_out : pathlib.Path
-        Folder to contain the downloaded documents
+    speech_path : pathlib.Path
+        Path on disk for the speech at `url`
     url : str
         The URL to download
     """
 
-    result_path = _url_to_filepath(folder_out, url)
     with session.get(url) as response:
         if response.status_code == 200:
-            with open(result_path, 'w', encoding = 'utf-8') as fp:
+            with open(speech_path, 'w', encoding = 'utf-8') as fp:
                 fp.write(response.text)
         else:
             print(f'could not open ({response.status_code}) url: {url}')
