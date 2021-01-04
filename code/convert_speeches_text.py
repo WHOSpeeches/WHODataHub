@@ -106,8 +106,7 @@ if __name__ == '__main__':
         help = 'File containing the speeches'' text',
         type = pathlib.Path,
         required = True)
-    #args = parser.parse_args()
-    #print(f'folder in: {args.folder_in}')
-    #print(f'file out: {args.file_out}')
-    #convert_speeches_text(args.folder_in, args.file_out)
-    convert_speeches_text(pathlib.Path('d:/datasets/who/raw'), pathlib.Path('d:/datasets/who/corpus.jsonl'))
+    args = parser.parse_args()
+    print(f'folder in: {args.folder_in}')
+    print(f'file out: {args.file_out}')
+    convert_speeches_text(args.folder_in, args.file_out)
