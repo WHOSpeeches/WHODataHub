@@ -69,12 +69,10 @@ def _get_paragraphs(tree: etree) -> t.Iterator[str]:
     Gets the paragraphs from the speech
     There are several formats we need to try in order of decreasing occurrence
     """
-    xpaths = ["//article/div/p", "//article/div/div", "//article/div/br"]
-    for xpath in xpaths:
-        paragraphs = tree.findall(xpath)
-        paragraphs = [paragraph for paragraph in _get_innertext(paragraphs)]
-        if len(paragraphs) > 0:
-            return paragraphs
+    paragraphs = tree.findall('//article/div')
+    paragraphs = [paragraph for paragraph in _get_innertext(paragraphs)]
+    if len(paragraphs) > 0:
+        return paragraphs
 
 @typechecked
 def _get_innertext(nodes: t.List[etree.Element]) -> t.Iterator[str]:
@@ -108,7 +106,8 @@ if __name__ == '__main__':
         help = 'File containing the speeches'' text',
         type = pathlib.Path,
         required = True)
-    args = parser.parse_args()
-    print(f'folder in: {args.folder_in}')
-    print(f'file out: {args.file_out}')
-    convert_speeches_text(args.folder_in, args.file_out)
+    #args = parser.parse_args()
+    #print(f'folder in: {args.folder_in}')
+    #print(f'file out: {args.file_out}')
+    #convert_speeches_text(args.folder_in, args.file_out)
+    convert_speeches_text(pathlib.Path('d:/datasets/who/raw'), pathlib.Path('d:/datasets/who/corpus.jsonl'))
