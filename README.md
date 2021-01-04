@@ -1,5 +1,9 @@
 # The WHO's Director General's Speeches
 
+![Python](https://img.shields.io/badge/python-3.x-blue.svg)
+![MIT license](https://img.shields.io/badge/License-MIT-green.svg)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4391413.svg)](https://doi.org/10.5281/zenodo.4391413)
+
 Below can be found a list of data retrieval scripts that help make this work possible.
 # Python
 
