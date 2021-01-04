@@ -53,7 +53,13 @@ The pathing can be changed to any desired location.
    ```{ps1}
    python convert_speeches_text.py -in d:/datasets/who/raw -out d:/datasets/who/corpus.jsonl
    ```
-6. [tokenize_speeches_text](./code/tokenize_speeches_text.py).
+6. [qa_speeches_text](./code/qa_speeches_text.py).
+   This script runs a simple QA check on the data.
+   The script can be run more than once.
+   ```{ps1}
+   python qa_speeches_text.py -raw d:/datasets/who/raw -jsonl d:/datasets/who/corpus.jsonl -out d:/datasets/who/qa.csv
+   ```
+7. [tokenize_speeches_text](./code/tokenize_speeches_text.py).
    This script will tokenize the raw speech text, converting one paragraph per line to one sentence per line.
    Additional cleanup (i.e. ` to ') will also be performed.
    The script can be run more than once.
