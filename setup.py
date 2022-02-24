@@ -1,29 +1,8 @@
 from setuptools import setup
-from setuptools.command.install import install
-from setuptools.command.develop import develop
-from setuptools.command.egg_info import egg_info
+from src.install import InstallOverride
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
-
-def custom_command(n):
-    print(f'----------------- hello - {n} ----------------')
-
-
-class CustomInstallCommand(install):
-    def run(self):
-        install.run(self)
-        custom_command(1)
-
-class CustomDevelopCommand(develop):
-    def run(self):
-        develop.run(self)
-        custom_command(2)
-
-class CustomEggInfoCommand(egg_info):
-    def run(self):
-        egg_info.run(self)
-        custom_command(3)
 
 setup(
     name = "WHOSpeeches",
@@ -65,16 +44,5 @@ setup(
         "requests>=2.23.0,<3.0.0",
         "requests-cache>=0.9.3,<1.0.0",
         "typeguard>=2.7.1,<3.0.0"],
-    cmdclass={
-        'install': CustomInstallCommand,
-        'develop': CustomDevelopCommand,
-        'egg_info': CustomEggInfoCommand,
-    }
+    cmdclass = { 'install': InstallOverride }
 )
-
-#import nltk
-#nltk.download('punkt')
-
-
-
-

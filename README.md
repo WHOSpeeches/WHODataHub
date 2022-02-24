@@ -15,28 +15,9 @@ You can install the package using the following steps:
 1. `pip` install using an _admin_ prompt
    ```{ps1}
    pip uninstall WHOSpeeches
-   pip install -vvv -e d:/repos/WHOSpeechAnalysis/data
-   pip install -vvv git+https://github.com/WHOSpeechAnalysis/data.git
-   ```
-2. Download `NLTK`'s extra options using an _admin_ prompt
-   ```{ps1}
-   python -c "import nltk;nltk.download('punkt')"
+   pip install -v git+https://github.com/WHOSpeechAnalysis/data.git
    ```
 
-
-
-# Python
-
-All scripts have been tested on Python 3.8.6.
-The external modules that were used can be found in the `requirements.txt` file along with their versions.
-**Note**: not all modules are required for all scripts.
-If any of the modules are not already installed, the normal `pip install -r requirements.txt` from an _ADMIN_ shell process should be followed.
-_After_ installing the `requirements.txt`, please follow the below steps:
-
-1. Download NLTK package extensions.
-   ```{ps1}
-   python -c "import nltk;nltk.download('punkt')"
-   ```
 
 ## Scripts
 
@@ -90,4 +71,28 @@ The pathing can be changed to any desired location.
    In this case the file is completely regenerated.
    ```{ps1}
    python tokenize_speeches_text.py -in d:/datasets/who/corpus.jsonl -out d:/datasets/who/corpus.tokenized.jsonl
+   ```
+
+# Development
+
+## Prerequisites
+
+You can install the package _for development_ using the following steps:
+
+**Note**: You can replace steps 1-3 with a VSCode Git:Clone
+
+1. Download the project from [GitHub](https://github.com/WHOSpeechAnalysis/data)
+   * Click the green "Code" button on the right.
+     Select "Download Zip"
+2. Remove zip protections by right-clicking on the file, selecting properties, and checking "security: unblock"
+3. Unzip the folder.
+   I recommend using the folder _c:/repos/WHOSpeechAnalysis/data_
+4. Run `pip`'s edit install using an _admin_ prompt
+   ```{ps1}   
+   pip uninstall WHOSpeeches
+   pip install -v -e d:/repos/WHOSpeechAnalysis/data
+   ```
+5. Install the `nltk` add-ons using an _admin_ prompt
+   ```{ps1}   
+   python -c "import nltk;nltk.download('punkt')"
    ```
