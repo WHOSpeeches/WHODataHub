@@ -1,8 +1,10 @@
 from setuptools import setup
 from src.install import InstallOverride
 
-with open('README.md', 'r') as fh:
-    long_description = fh.read()
+with open('README.md', 'r') as fp:
+    long_description = fp.read()
+with open('requirements.txt', 'r') as fp:
+    requires = [req.strip() for req in fp.readlines()]
 
 setup(
     name = "WHOSpeeches",
@@ -35,14 +37,6 @@ setup(
         'Topic :: Text Processing :: Linguistic'
     ],
     python_requires = '>=3.10, <4',
-    install_requires = [
-        "jsonlines>=1.2.0,<2.0.0",
-        "lxml>=4.5.0,<5.0.0",
-        "nltk>=3.4.5,<4.0.0",
-        "progressbar2>=3.51.4,<4.0.0",
-        "protego>=0.1.16,<0.2.0",
-        "requests>=2.23.0,<3.0.0",
-        "requests-cache>=0.9.3,<1.0.0",
-        "typeguard>=2.7.1,<3.0.0"],
+    install_requires = requires,
     cmdclass = { 'install': InstallOverride }
 )
