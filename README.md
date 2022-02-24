@@ -4,7 +4,27 @@
 ![MIT license](https://img.shields.io/badge/License-MIT-green.svg)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4391412.svg)](https://doi.org/10.5281/zenodo.4391412)
 
-Below can be found a list of data retrieval scripts that help make this work possible.
+Below is the Gen 2 service for retrieving the WHO's Director General's Speeches.
+
+# Operation
+
+## Install
+
+You can install the package using the following steps:
+
+1. `pip` install using an _admin_ prompt
+   ```{ps1}
+   pip uninstall WHOSpeeches
+   pip install -vvv -e d:/repos/WHOSpeechAnalysis/data
+   pip install -vvv git+https://github.com/WHOSpeechAnalysis/data.git
+   ```
+2. Download `NLTK`'s extra options using an _admin_ prompt
+   ```{ps1}
+   python -c "import nltk;nltk.download('punkt')"
+   ```
+
+
+
 # Python
 
 All scripts have been tested on Python 3.8.6.

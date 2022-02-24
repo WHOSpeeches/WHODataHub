@@ -5,3 +5,8 @@ __pycache__
 
 # config
 config.yml
+
+# Build
+/build
+/dist
+*.egg-info
