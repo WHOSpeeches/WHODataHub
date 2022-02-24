@@ -18,6 +18,14 @@ You can install the package using the following steps:
    pip install -v git+https://github.com/WHOSpeechAnalysis/data.git
    ```
 
+## Run
+
+You can run the package in the following ways:
+
+1. Get all the WHO's Director General's Speeches as a single csv from scratch.
+   ```{ps1}
+   WHOSpeeches -out "c:/data/who/speeches.csv"
+   ```
 
 ## Scripts
 
@@ -90,7 +98,7 @@ You can install the package _for development_ using the following steps:
 4. Run `pip`'s edit install using an _admin_ prompt
    ```{ps1}   
    pip uninstall WHOSpeeches
-   pip install -v -e d:/repos/WHOSpeechAnalysis/data
+   pip install -v -e c:/repos/WHOSpeechAnalysis/data
    ```
 5. Install the `nltk` add-ons using an _admin_ prompt
    ```{ps1}   

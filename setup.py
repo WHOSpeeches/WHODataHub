@@ -11,7 +11,7 @@ setup(
     version = "0.2.0",
     author = '@markanewman, @drstannwoji2019',
     author_email = 'whospeeches@trinetteandmark.com',
-    description = 'Gen 2 service for retrieving the WHO''s Director General''s Speeches',
+    description = "Gen 2 service for retrieving the WHO's Director General's Speeches",
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     url = "https://github.com/WHOSpeechAnalysis/data",
