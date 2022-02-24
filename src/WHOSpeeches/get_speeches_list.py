@@ -1,10 +1,9 @@
-import const
 import pathlib
-import time
 import requests
 import protego
 import progressbar as pb
-from argparse import ArgumentParser
+from .const import *
+from .utils import *
 from datetime import datetime
 from lxml import etree
 from typeguard import typechecked
@@ -26,19 +25,19 @@ def get_speeches_list(folder_out: pathlib.Path) -> None:
     folder_out.mkdir(parents = True, exist_ok = True)
 
     with requests.Session() as session:
-        session.headers['User-Agent'] = const.USER_AGENT
+        session.headers['User-Agent'] = USER_AGENT
         rtxt = _setup_robots_txt(session)
         page = 1
-        url = const.URL_SPEECHES.format(page = page)
-        if rtxt.can_fetch(const.USER_AGENT, url):
+        url = URL_SPEECHES.format(page = page)
+        if rtxt.can_fetch(USER_AGENT, url):
             widgets = [ 'Retrieving Page # ', pb.Counter(), ' ', pb.BouncingBar(marker = '.', left = '[', right = ']'), ' ', pb.Timer()]
             with pb.ProgressBar(widgets = widgets) as bar:
                 bar.update(page)
                 curr_file = _download_page(session, page, folder_out)
                 while _has_more_pages(curr_file) and _need_more_pages(curr_file):
-                    _take_a_nap(rtxt)
+                    take_a_nap(rtxt)
                     page = page + 1
-                    url = const.URL_SPEECHES.format(page = page)
+                    url = URL_SPEECHES.format(page = page)
                     bar.update(page)                    
                     curr_file = _download_page(session, page, folder_out)
         else:
@@ -54,7 +53,7 @@ def _setup_robots_txt(session: requests.Session) -> protego.Protego:
     session: requests.Session
         The browser session
     """
-    with session.get(const.URL_ROBOTS) as response:
+    with session.get(URL_ROBOTS) as response:
         rtxt = protego.Protego.parse(response.text)
     return rtxt
 
@@ -73,7 +72,7 @@ def _download_page(session: requests.Session, page: int, folder_out: pathlib.Pat
         Folder to contain the downloaded documents
     """
 
-    url = const.URL_SPEECHES.format(page = page)
+    url = URL_SPEECHES.format(page = page)
     result_path = folder_out.joinpath( f'./header.{_run_id}.{page}.html')
     with session.get(url) as response:
         if response.status_code == 200:
@@ -147,20 +146,3 @@ def _speech_date(file_path: pathlib.Path, first: bool) -> datetime.date:
     node = tree.find(xpath)
     result = datetime.strptime(node.text, '%d %B %Y')
     return result.date()
-
-@typechecked
-def _take_a_nap(rtxt: protego.Protego) -> None:
-    delay = rtxt.crawl_delay(const.USER_AGENT)
-    delay = delay if delay is not None else const.WEB_DELAY
-    time.sleep(delay)
-
-if __name__ == '__main__':
-    parser = ArgumentParser()
-    parser.add_argument(
-        '-out', '--folder-out',
-        help = 'Folder to contain the downloaded documents',
-        type = pathlib.Path,
-        required = True)
-    args = parser.parse_args()
-    print(f'folder out: {args.folder_out}')
-    get_speeches_list(args.folder_out)
