@@ -2,8 +2,8 @@ import requests
 import protego # type: ignore
 import time
 import typing as t
-from ..utils.const import *
-from .html_helper import has_more_pages
+from .const import *
+from ..xxx.html_helper import has_more_pages
 
 def read_speech_list() -> t.Iterator[str]:
     """
