@@ -3,10 +3,8 @@ __pycache__
 .vscode
 *.bak
 
-# config
-config.yml
-
 # Build
 /build
 /dist
+/typings
 *.egg-info
