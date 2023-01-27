@@ -12,6 +12,12 @@ def cache_speeches(folder: pathlib.Path, speeches: t.Iterator[Speech]) -> t.Iter
                 writer.write(speech) # type: ignore
                 yield speech
 
+def is_missing_download(folder: pathlib.Path, urls: t.Iterator[str]) -> t.Iterator[str]:
+    for url in urls:
+        file_path = folder.joinpath(f'{hash(url)}.html')
+        if not file_path.exists():
+            yield url
+
 def load_cached_speeches(folder: pathlib.Path) -> t.Iterator[Speech]:
     for file_name in folder.iterdir():
         if file_name.is_file() and file_name.suffix.lower() == '.jsonl' and not file_name.stem.startswith('_'):
