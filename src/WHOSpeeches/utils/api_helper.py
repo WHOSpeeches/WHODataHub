@@ -21,7 +21,7 @@ def api_speeches(skip: int = 0) -> t.Iterator[Speech]:
         rtxt = _setup_robots_txt(session)
         if rtxt.can_fetch(USER_AGENT, next_link): # type: ignore            
             curr_page = _download_page(session, next_link)
-            if curr_page is not None:
+            while curr_page is not None:
                 speeches = _null_coalesce(curr_page, 'value')
                 if isinstance(speeches, list):
                     for speech in speeches:
@@ -30,6 +30,8 @@ def api_speeches(skip: int = 0) -> t.Iterator[Speech]:
                 if isinstance(next_link, str):
                     _take_a_nap(rtxt)
                     curr_page = _download_page(session, next_link)
+                else:
+                    curr_page = None
         else:
             print(f'robots.txt forbids url: {next_link}')
 
