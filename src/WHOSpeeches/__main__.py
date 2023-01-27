@@ -1,25 +1,31 @@
-
 import pathlib
 import sys
-from .__init__ import __version__
-from .get_speeches_list import get_speeches_list
-from argparse import ArgumentParser
-from typeguard import typechecked
+from argparse import ArgumentParser, Namespace
+from .dtypes import settings
+from .RetrieveSpeeches import RetrieveSpeeches
 
-@typechecked
 def main() -> None:
     parser = ArgumentParser(prog = 'WHOSpeeches', description = "Retrieve the WHO's Director General's Speeches.")
-    parser.add_argument('-out', dest = 'file_out', type = pathlib.Path, required = True, help = 'File to store the results')
+    retrieve_parser(parser)
     args = parser.parse_args()
+    _print_args(args)
+    args.run(args)
 
-    print(f'WHOSpeeches v{__version__}')
+def retrieve_parser(parser: ArgumentParser) -> None:
+    def run(args: Namespace) -> None:
+        set = settings(args.dest)
+        app = RetrieveSpeeches(set)
+        app.init()
+        app.retrieve()
+    parser.add_argument('-dest', type = pathlib.Path, required = True, help = 'The location of the retrieved speeches')
+    parser.set_defaults(run = run)
+
+def _print_args(args: Namespace) -> None:
+    print(f'---------')
+    for key in args.__dict__.keys():
+        if key not in ['run']:
+            print(f'{key}: {args.__dict__[key]}')
     print('---------')
-    print(f'File Out: {str(args.file_out)}')
-    print('---------')
-
-    temp = args.file_out.parent.joinpath('./temp')
-    get_speeches_list(temp)
-
 
 if __name__ == "__main__":
     sys.exit(main())
