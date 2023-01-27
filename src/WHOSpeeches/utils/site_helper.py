@@ -5,7 +5,7 @@ import typing as t
 from .const import *
 from ..xxx.html_helper import has_more_pages
 
-def read_speech_list() -> t.Iterator[str]:
+def site_speeches() -> t.Iterator[str]:
     """
     Get the list of all of the WHO director general's speeches.
 
